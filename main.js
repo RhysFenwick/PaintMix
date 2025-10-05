@@ -37,6 +37,7 @@ function newRound() {
     // Clear guess boxes and hints
     for (let i = 0; i < maxGuesses; i++) {
         guessBoxes[i].style.backgroundColor = "lightgrey";
+        guessBoxes[i].innerText = "?";
         guessHints[i].innerHTML = "";
     }
 }
@@ -45,6 +46,12 @@ function calculateScore(guess, target) {
     let diff = Math.abs(guess[0]-target[0]) + Math.abs(guess[1]-target[1]) + Math.abs(guess[2]-target[2]);
     let score = Math.max(0, 765 - diff);
     return score;
+}
+
+// Returns percentage as string with 1 decimal place
+function getAccuracyPercent(score) {
+    let accuracy = 100 * score / 765;
+    return `${(Math.round(accuracy * 10) / 10).toString()}%`
 }
 
 // Takes an array of colour offsets for R, G and B from -255 to 255 and generates feedback
@@ -91,8 +98,15 @@ function guess() {
     // Get the relevant guess box and hint
     let guessBox = guessBoxes[guessCount - 1];
     let guessHint = guessHints[guessCount - 1];
+    
+    // Recolour the guess box
     guessBox.style.backgroundColor = `rgb(${guessColor[0]}, ${guessColor[1]}, ${guessColor[2]})`;
+    
+    // Add feedback as hint 
     guessHint.innerHTML = feedback;
+    
+    // Add percentage score
+    guessBox.innerText = getAccuracyPercent(calculateScore(guessColor, targetColor));
 }
 
 function updateSliderLabel(slider) {
