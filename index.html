@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PaintMix</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>PaintMix</h1>
+    <p>Try to match the target colour by adjusting the RGB sliders and clicking "Guess".</p>
+    <p>Your score will be based on how close your guess is to the target colour.</p>
+
+    <div id="target-container">
+        <div id="target" class="color-box"></div>
+        <div id="guess-row">
+            <div id="guess-div-1" class="guess-div">
+                <div class="guess-display color-box" id="guess-1">?</div>
+                <div id="guess-hint-1" class="guess-hint"></div>
+            </div>
+
+            <div id="guess-div-2" class="guess-div">
+                <div class="guess-display color-box" id="guess-2">?</div>
+                <div id="guess-hint-2" class="guess-hint"></div>
+            </div>
+
+            <div id="guess-div-3" class="guess-div">
+                <div class="guess-display color-box" id="guess-3">?</div>
+                <div id="guess-hint-3" class="guess-hint"></div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="guess-container">
+        <div id="sliders">
+            <input
+            class="color-slider"
+            type="range"
+            id="red-slider"
+            name="red"
+            min="0"
+            max="255"
+            value="127"
+            step="1" />
+            <label for="red-slider">Red</label>
+
+            <input
+            class="color-slider"
+            type="range"
+            id="green-slider"
+            name="green"
+            min="0"
+            max="255"
+            value="127"
+            step="1" />
+            <label for="green-slider">Green</label>
+
+            <input
+            class="color-slider"
+            type="range"
+            id="blue-slider"
+            name="blue"
+            min="0"
+            max="255"
+            value="127"
+            step="1" />
+            <label for="blue-slider">Blue</label>
+        </div>
+
+        <div id="buttons">
+            <button id="guess-button">Guess</button>
+            <button id="new-round-button">New Game</button>
+        </div>
+
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

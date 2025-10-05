@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    font-size: 16px; 
+}
+
+input[type="range"] {
+    -webkit-appearance: none; /* For Chrome, Safari, Edge, Opera */
+    appearance: none; /* Standard property */
+    width: 100%; /* Adjust as needed */
+    height: 10px; /* Adjust as needed */
+    background: #d3d3d3; /* Track background */
+    outline: none; /* Remove outline on focus */
+    opacity: 0.7; /* Adjust opacity */
+    transition: opacity .2s;
+}
+
+#target-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    flex-direction: column;
+}
+
+#target {
+    width: 100vw;
+    height: 10vh;
+}
+
+#guess-row {
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+}
+
+.guess-div {
+    flex: 1;
+}
+
+.guess-display {
+    background-color: lightgrey;
+    text-align: center;
+    line-height: 10vh;
+    font-size:x-large;
+}
+
+#guess-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    flex-direction: column;
+}
+
+#sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+#red-slider {
+    background-color: red;
+}
+#green-slider {
+    background-color: green;
+}
+#blue-slider {
+    background-color: blue;
+}
