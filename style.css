@@ -76,3 +76,7 @@ input[type="range"] {
 #blue-slider {
     background-color: blue;
 }
+
+.popup {
+    visibility: none;
+}

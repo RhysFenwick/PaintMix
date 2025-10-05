@@ -11,7 +11,6 @@
 <body>
     <h1>PaintMix</h1>
     <p>Try to match the target colour by adjusting the RGB sliders and clicking "Guess".</p>
-    <p>Your score will be based on how close your guess is to the target colour.</p>
 
     <div id="target-container">
         <div id="target" class="color-box"></div>
@@ -76,6 +75,15 @@
         </div>
 
     </div>
+    
+    <div id="info" class="popup">
+        <p>Try and add red, green, and blue together to get the target colour. Note that this is additive (if you put them all at maximum you get white) rather than subtractive - think of it like shining three overlapping coloured lights at the same spot, rather than mixing paints.</p>
+    </div>
+   
+    <div id="settings" class="popup"></div>
+    
+    <div id="scoring" class="popup"></div>
+    
     <script src="main.js"></script>
 </body>
 </html>

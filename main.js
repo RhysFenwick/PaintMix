@@ -124,3 +124,21 @@ for (let slider of sliderElements) {
 addEventListener("load", function() {
     newRound();
 });
+
+// Popup control logic - takes a popup div (not just id)
+function showPopup(popup) {
+    popup.style.visibility = "display";
+}
+
+function hidePopup(popup) {
+    popup.style.visibility = "none";
+}
+
+function togglePopup(popup) {
+    if (popup.style.visibility == "none") {
+        popup.style.visibility = "display"
+    }
+    else {
+        popup.style.visibility = "none"
+    }
+}
