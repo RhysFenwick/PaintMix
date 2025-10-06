@@ -78,5 +78,6 @@ input[type="range"] {
 }
 
 .popup {
-    visibility: none;
+    display: none;
+    position: fixed;
 }
