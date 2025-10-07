@@ -246,11 +246,11 @@ function showPopup(popup) {
 
     // Add the fadeIn animation class
     popup.classList.remove('animate__fadeOut');  // Ensure fadeOut class is not present
-    popup.classList.add('animate__animated', 'animate__fadeIn', 'animate__faster');
+    popup.classList.add('animate__animated', 'animate__fadeIn', 'animate__fastest');
     
     // Optional: Remove the animation class after animation is done (if you want to re-trigger it later)
     popup.addEventListener('animationend', () => {
-        popup.classList.remove('animate__animated', 'animate__fadeIn');
+        popup.classList.remove('animate__animated', 'animate__fadeIn', 'animate__fastest');
     });
 }
 
@@ -261,12 +261,12 @@ function randomlyChoose(array) {
 function hidePopup(popup) {
     // Add the fadeOut animation class
     popup.classList.remove('animate__fadeIn');  // Ensure fadeIn class is not present
-    popup.classList.add('animate__animated', 'animate__fadeOut');
+    popup.classList.add('animate__animated', 'animate__fadeOut', 'animate__fastest');
     
     // After the animation ends, hide the element
     popup.addEventListener('animationend', () => {
         popup.style.display = "none";
-        popup.classList.remove('animate__animated', 'animate__fadeOut');
+        popup.classList.remove('animate__animated', 'animate__fadeOut','animate__fastest');
     });
 }
 
