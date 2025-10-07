@@ -48,9 +48,30 @@ input[type="range"] {
 
 #target {
     width: 90vw;
-    left: 5vw;
     height: 10vh;
+    position: relative;  /* Make sure the target has a relative position */
+    overflow: hidden;   /* Ensure content doesn't overflow when ::before is hidden */
 }
+
+/* The ::before pseudo-element, which will cover the container with targetColor */
+#target::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--endColor, blue); /* Default to blue if no color is set */
+    transform: scaleX(0); /* Initially no width */
+    transform-origin: left; /* Expands from left */
+    transition: transform 1s ease-in-out, background-color 0s; /* Transition on transform and color */
+}
+
+/* Trigger the transition by adding a class to scale the ::before element */
+#target.transitioned::before {
+    transform: scaleX(1); /* Expand to full width */
+}
+
 
 #guess-row {
     width: 90vw;

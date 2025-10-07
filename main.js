@@ -36,7 +36,21 @@ const directions = ["more", "less"];
 // Resets game with a new colour
 function newRound() {
     targetColor = [Math.floor(Math.random()*256), Math.floor(Math.random()*256), Math.floor(Math.random()*256)];
-    targetDisplay.style.backgroundColor = `rgb(${targetColor[0]}, ${targetColor[1]}, ${targetColor[2]})`;
+
+    // Set the dynamic CSS variable for the end color
+    const colorString = `rgb(${targetColor[0]}, ${targetColor[1]}, ${targetColor[2]})`;
+    targetDisplay.style.setProperty('--endColor', colorString); // Dynamically set the color for ::before
+
+    // Trigger the transformation (wipe effect)
+    targetDisplay.classList.add('transitioned');
+
+    // After the transformation (1s), change the main background color to targetColor and reset the ::before pseudo-element
+    setTimeout(() => {
+        targetDisplay.style.backgroundColor = colorString; // Change background to targetColor
+        // Hide the ::before pseudo-element by resetting its transform
+        targetDisplay.classList.remove('transitioned');
+    }, 1000);  // Timeout should match the transition duration (1s)
+
     maxScore = 0;
     guessCount = 0;
 
@@ -229,6 +243,15 @@ function showPopup(popup) {
         popup.appendChild(closeButton);
     }
     popup.style.display = "block";
+
+    // Add the fadeIn animation class
+    popup.classList.remove('animate__fadeOut');  // Ensure fadeOut class is not present
+    popup.classList.add('animate__animated', 'animate__fadeIn', 'animate__faster');
+    
+    // Optional: Remove the animation class after animation is done (if you want to re-trigger it later)
+    popup.addEventListener('animationend', () => {
+        popup.classList.remove('animate__animated', 'animate__fadeIn');
+    });
 }
 
 function randomlyChoose(array) {
@@ -236,7 +259,15 @@ function randomlyChoose(array) {
 }
 
 function hidePopup(popup) {
-    popup.style.display = "none";
+    // Add the fadeOut animation class
+    popup.classList.remove('animate__fadeIn');  // Ensure fadeIn class is not present
+    popup.classList.add('animate__animated', 'animate__fadeOut');
+    
+    // After the animation ends, hide the element
+    popup.addEventListener('animationend', () => {
+        popup.style.display = "none";
+        popup.classList.remove('animate__animated', 'animate__fadeOut');
+    });
 }
 
 function togglePopup(popup) {
