@@ -208,17 +208,24 @@ function adjustSlider(sliderId, delta) {
 
 // Popup control logic - takes a popup div (not just id)
 function showPopup(popup) {
-    // Add a close button dynamically if it doesn't exist
-    if (!popup.querySelector(".close-button")) {
+    // Add a close button dynamically (deletes it if it already exists - a hacky way to change the text contents)
+    if (popup.querySelector("#close-button") && popup.id != "scoring-popup") {
+        popup.querySelector("#close-button").remove();
+    }
+    if (!popup.querySelector("#close-button") && popup.id != "scoring-popup") {
         const closeButton = document.createElement("button");
-        closeButton.className = "close-button";
-        closeButton.innerHTML = "Neato";
+        closeButton.id = "close-button";
+        closeButton.innerHTML = randomlyChoose(["Neato","Got it","OK","Thanks!","Cool beans","Yeah yeah","If you say so","Sweet","Righto","Cheers","Aye aye","Roger that","Understood", "Whatever"]);
         closeButton.addEventListener("click", function() {
             hidePopup(popup);
         });
         popup.appendChild(closeButton);
     }
     popup.style.display = "block";
+}
+
+function randomlyChoose(array) {
+    return array[Math.floor(Math.random() * array.length)];
 }
 
 function hidePopup(popup) {
@@ -240,7 +247,7 @@ function setScoringText() {
     scoringPopup.innerHTML = `Congratulations! Your final score was ${Math.max(0,(maxScore-265))}/500 points.<br><br>
     Your most accurate guess was ${getAccuracyPercent(maxScore)} accurate.<br><br>
     The target color was ${targetColor[0]} red, ${targetColor[1]} green, and ${targetColor[2]} blue.<br><br>
-    New game?
+    New game?<br>
     <button class="close-button" onclick="hidePopup(scoringPopup); newRound();">Yeah!</button>
     <button class="close-button" onclick="hidePopup(scoringPopup)">Nah</button>`;
 }

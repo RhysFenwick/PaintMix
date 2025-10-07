@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PaintMix</title>
+    <title>Colour Caller</title>
     <link rel="stylesheet" href="style.css">
     <link
     rel="stylesheet"
@@ -13,8 +13,8 @@
 </head>
 
 <body>
-    <h1>PaintMix</h1>
-    <p>Try to match the target colour by adjusting the RGB sliders and clicking "Guess".</p>
+    <h1>Colour Caller</h1>
+    <p>Try to match the target colour by adjusting the sliders and clicking "Guess".</p>
     <div id="menu">
         <button id="info-button" class="menu-button">Info</button>
         <button id="settings-button" class="menu-button">Settings</button>
@@ -118,6 +118,7 @@
     </div>
    
     <div id="settings-popup" class="popup">
+        <p>(Come into effect next game)</p>
         <h4>Hints</h4>
         <div id="hints-box">
             <input type="radio" id="hints-off" name="hints" value="0">
@@ -127,8 +128,8 @@
             <input type="radio" id="hints-detailed" name="hints" value="2">
             <label for="hints-detailed">Detailed</label><br><br>
         </div>
+
         <h4>Number of guesses</h4>
-        <p>(Comes into effect next game)</p>
         <input type="range" id="max-guesses-slider" name="max-guesses-slider" min="1" max="10" value="3">
         <label for="max-guesses-slider" id="max-guesses-label">3</label>
         <br>
