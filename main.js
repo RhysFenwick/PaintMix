@@ -251,7 +251,8 @@ function showPopup(popup) {
     // Optional: Remove the animation class after animation is done (if you want to re-trigger it later)
     popup.addEventListener('animationend', () => {
         popup.classList.remove('animate__animated', 'animate__fadeIn', 'animate__fastest');
-    });
+    }, { once: true });
+
 }
 
 function randomlyChoose(array) {
@@ -267,7 +268,7 @@ function hidePopup(popup) {
     popup.addEventListener('animationend', () => {
         popup.style.display = "none";
         popup.classList.remove('animate__animated', 'animate__fadeOut','animate__fastest');
-    });
+    }, { once: true });
 }
 
 function togglePopup(popup) {
