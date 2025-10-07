@@ -3,7 +3,7 @@ var targetColor = [0,0,0]; // RGB
 var guessColor = [0,0,0]; // RGB
 var maxScore = 0;
 var guessCount = 0;
-var maxGuesses = 3;
+var maxGuesses = 4;
 var hintLevel = 1; // 0 = off, 1 = simple, 2 = detailed
 
 // Element references
