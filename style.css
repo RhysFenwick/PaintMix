@@ -29,12 +29,14 @@ input[type="range"] {
 }
 
 #target {
-    width: 100vw;
+    width: 90vw;
+    left: 5vw;
     height: 10vh;
 }
 
 #guess-row {
-    width: 100vw;
+    width: 90vw;
+    left: 5vw;
     height: 10vh;
     display: flex;
 }
@@ -48,6 +50,13 @@ input[type="range"] {
     text-align: center;
     line-height: 10vh;
     font-size:x-large;
+}
+
+.guess-hint {
+    text-align: center;
+    font-size: medium;
+    height: 5vh;
+    color: dimgrey;
 }
 
 #guess-container {
@@ -77,7 +86,24 @@ input[type="range"] {
     background-color: blue;
 }
 
+.slider-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 80vw;
+}
+
 .popup {
     display: none;
     position: fixed;
+    width: 80vw;
+    height: 80vh;
+    border: lightslategray 1vw solid;
+    border-radius: 1vw;
+    top: 10vh;
+    left: 10vw;
+    background-color: white;
+    z-index: 10;
+    padding: 1vw;
+    text-align: center;
 }

@@ -15,23 +15,41 @@
 <body>
     <h1>PaintMix</h1>
     <p>Try to match the target colour by adjusting the RGB sliders and clicking "Guess".</p>
-
+    <div id="menu">
+        <button id="info-button" class="menu-button">Info</button>
+        <button id="settings-button" class="menu-button">Settings</button>
+    </div>
     <div id="target-container">
         <div id="target" class="color-box"></div>
         <div id="guess-row">
             <div id="guess-div-1" class="guess-div">
-                <div class="guess-display color-box" id="guess-1">?</div>
-                <div id="guess-hint-1" class="guess-hint"></div>
+                <div class="guess-display color-box" id="guess-1"
+                data-red="0"
+                data-green="0"
+                data-blue="0">?</div>
+                <div id="guess-hint-1" class="guess-hint">
+                    <button id="hint-button-1" class="hint-button">Hint</button>
+                </div>
             </div>
 
             <div id="guess-div-2" class="guess-div">
-                <div class="guess-display color-box" id="guess-2">?</div>
-                <div id="guess-hint-2" class="guess-hint"></div>
+                <div class="guess-display color-box" id="guess-2"
+                data-red="0"
+                data-green="0"
+                data-blue="0">?</div>
+                <div id="guess-hint-2" class="guess-hint">
+                    <button id="hint-button-2" class="hint-button">Hint</button>
+                </div>
             </div>
 
             <div id="guess-div-3" class="guess-div">
-                <div class="guess-display color-box" id="guess-3">?</div>
-                <div id="guess-hint-3" class="guess-hint"></div>
+                <div class="guess-display color-box" id="guess-3"
+                data-red="0"
+                data-green="0"
+                data-blue="0">?</div>
+                <div id="guess-hint-3" class="guess-hint">
+                    <button id="hint-button-3" class="hint-button">Hint</button>
+                </div>
             </div>
         </div>
     </div>
@@ -39,38 +57,51 @@
 
     <div id="guess-container">
         <div id="sliders">
-            <input
-            class="color-slider"
-            type="range"
-            id="red-slider"
-            name="red"
-            min="0"
-            max="255"
-            value="127"
-            step="1" />
+            <div class="slider-box">
+                <button class="decrement" data-target="red-slider">−</button>
+                <input
+                class="color-slider"
+                type="range"
+                id="red-slider"
+                name="red"
+                min="0"
+                max="255"
+                value="127"
+                step="1" />
+                <button class="increment" data-target="red-slider">+</button>
+            </div>
             <label for="red-slider">Red</label>
 
-            <input
-            class="color-slider"
-            type="range"
-            id="green-slider"
-            name="green"
-            min="0"
-            max="255"
-            value="127"
-            step="1" />
+            <div class="slider-box">
+                <button class="decrement" data-target="green-slider">−</button>
+                <input
+                class="color-slider"
+                type="range"
+                id="green-slider"
+                name="green"
+                min="0"
+                max="255"
+                value="127"
+                step="1" />
+                <button class="increment" data-target="green-slider">+</button>
+            </div>
             <label for="green-slider">Green</label>
 
-            <input
-            class="color-slider"
-            type="range"
-            id="blue-slider"
-            name="blue"
-            min="0"
-            max="255"
-            value="127"
-            step="1" />
+            <div class="slider-box">
+                <button class="decrement" data-target="blue-slider">−</button>
+                <input
+                class="color-slider"
+                type="range"
+                id="blue-slider"
+                name="blue"
+                min="0"
+                max="255"
+                value="127"
+                step="1" />
+                <button class="increment" data-target="blue-slider">+</button>
+            </div>
             <label for="blue-slider">Blue</label>
+
         </div>
 
         <div id="buttons">
@@ -80,13 +111,15 @@
 
     </div>
     
-    <div id="info" class="popup">
+    <div id="info-popup" class="popup">
         <p>Try and add red, green, and blue together to get the target colour. Note that this is additive (if you put them all at maximum you get white) rather than subtractive - think of it like shining three overlapping coloured lights at the same spot, rather than mixing paints.</p>
     </div>
    
-    <div id="settings" class="popup"></div>
+    <div id="settings-popup" class="popup"></div>
     
-    <div id="scoring" class="popup"></div>
+    <div id="scoring-popup" class="popup"></div>
+
+    <div id="hint-popup" class="popup"></div>
     
     <script src="main.js"></script>
 </body>
