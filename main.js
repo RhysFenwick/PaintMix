@@ -166,6 +166,13 @@ function guess() {
     guessBox.setAttribute("data-red", guessColor[0]);
     guessBox.setAttribute("data-green", guessColor[1]);
     guessBox.setAttribute("data-blue", guessColor[2]);
+
+    // Change text colour for contrast if necessary
+    if ((guessColor[0]*0.299 + guessColor[1]*0.587 + guessColor[2]*0.114) < 186) {
+        guessBox.style.color = "white";
+    } else {
+        guessBox.style.color = "black";
+    }
     
     // Show hint button if settings allow
     if (hintLevel > 0) {
