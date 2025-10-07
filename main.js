@@ -4,12 +4,13 @@ var guessColor = [0,0,0]; // RGB
 var maxScore = 0;
 var guessCount = 0;
 var maxGuesses = 3;
+var hintLevel = 1; // 0 = off, 1 = simple, 2 = detailed
 
 // Element references
 // Groups
 const sliderElements = document.getElementsByClassName("color-slider");
-const guessBoxes = document.getElementsByClassName("guess-display");
-const guessHintButtons = document.getElementsByClassName("hint-button");
+var guessBoxes = document.getElementsByClassName("guess-display");
+var guessHintButtons = document.getElementsByClassName("hint-button");
 
 // Singles 
 const newRoundButton = document.getElementById("new-round-button");
@@ -24,6 +25,9 @@ const hintPopup = document.getElementById("hint-popup");
 
 const targetDisplay = document.getElementById("target");
 const guessDisplay = document.getElementById("guess-display");
+
+const maxGuessesSlider = document.getElementById("max-guesses-slider");
+const maxGuessesLabel = document.getElementById("max-guesses-label");
 
 // Sentence fragments
 const comparatives = ["the tiniest bit", "a little bit","a bit", "a fair bit", "way", "WAY"];
@@ -42,6 +46,9 @@ function newRound() {
         updateSliderLabel(slider);
     }
 
+    getSettings();
+    buildGuessBoxes();
+
     // Clear guess boxes and hints
     for (let i = 0; i < maxGuesses; i++) {
         var guessBackground = 255-((i+1)*(120/guessBoxes.length));
@@ -50,6 +57,49 @@ function newRound() {
         guessHintButtons[i].style.display = "none";
     }
 }
+
+// Takes maxGuesses and creates a corresponding number of guess boxes
+function buildGuessBoxes() {
+    const guessContainer = document.getElementById("guess-row");
+    guessContainer.innerHTML = "";
+    for (let i = 0; i < maxGuesses; i++) {
+        const guessBox = document.createElement("div");
+        guessBox.className = "guess-div";
+        const guessDisplay = document.createElement("div");
+        guessDisplay.classList.add("guess-display","color-box");
+        guessDisplay.innerText = "?";
+        guessDisplay.style.backgroundColor = `rgb(${255-((i+1)*(120/maxGuesses))}, ${255-((i+1)*(120/maxGuesses))}, ${255-((i+1)*(120/maxGuesses))})`;
+        guessDisplay.setAttribute("data-red", "0");
+        guessDisplay.setAttribute("data-green", "0");
+        guessDisplay.setAttribute("data-blue", "0");
+        
+        const hintBox = document.createElement("div");
+        hintBox.className = "guess-hint";
+
+        const hintButton = document.createElement("button");
+        hintButton.className = "hint-button";
+        hintButton.innerText = "Hint";
+        hintButton.style.display = "none";
+        hintBox.appendChild(hintButton);
+
+        guessBox.appendChild(guessDisplay);
+        guessBox.appendChild(hintBox);
+        guessContainer.appendChild(guessBox);
+    }
+    // Update references
+    guessBoxes = document.getElementsByClassName("guess-display");
+    guessHintButtons = document.getElementsByClassName("hint-button");
+
+    // Add event listeners to new hint buttons
+    for (let i = 0; i < guessHintButtons.length; i++) {
+        guessHintButtons[i].addEventListener("click", function() {
+            hintPopup.innerHTML = generateHint(i);
+            showPopup(hintPopup);
+        });
+    }
+}
+
+// Calculates score out of 765 (shifted down to 500 before being displayed) based on guess and target RGB arrays
 
 function calculateScore(guess, target) {
     let diff = Math.abs(guess[0]-target[0]) + Math.abs(guess[1]-target[1]) + Math.abs(guess[2]-target[2]);
@@ -80,7 +130,12 @@ function generateHint(guess) {
         } else {
             let direction = offsets[i] > 0 ? "more" : "less";
             let amountIndex = Math.min(Math.floor(Math.abs(offsets[i]) / 43), comparatives.length - 1);
-            hint.push(`You need ${comparatives[amountIndex]} ${direction} ${["red","green","blue"][i]}.<br>`);
+            if (hintLevel == 1) {
+                hint.push(`You need ${direction} ${["red","green","blue"][i]}.<br>`);
+            }
+            else if (hintLevel == 2) {
+                hint.push(`You need ${comparatives[amountIndex]} ${direction} ${["red","green","blue"][i]}.<br>`);
+            }
         }
     }
     return hint.join("");
@@ -112,8 +167,10 @@ function guess() {
     guessBox.setAttribute("data-green", guessColor[1]);
     guessBox.setAttribute("data-blue", guessColor[2]);
     
-    // Show hint button
-    guessHint.style.display = "inline-block";
+    // Show hint button if settings allow
+    if (hintLevel > 0) {
+        guessHint.style.display = "inline-block";
+    }
     
     // Add percentage score
     guessBox.innerText = getAccuracyPercent(calculateScore(guessColor, targetColor));
@@ -180,7 +237,12 @@ function togglePopup(popup) {
 
 // Popup text content
 function setScoringText() {
-    scoringPopup.innerHTML = `Congratulations! Your final score was ${maxScore} points.<br><br>`
+    scoringPopup.innerHTML = `Congratulations! Your final score was ${Math.max(0,(maxScore-265))}/500 points.<br><br>
+    Your most accurate guess was ${getAccuracyPercent(maxScore)} accurate.<br><br>
+    The target color was ${targetColor[0]} red, ${targetColor[1]} green, and ${targetColor[2]} blue.<br><br>
+    New game?
+    <button class="close-button" onclick="hidePopup(scoringPopup); newRound();">Yeah!</button>
+    <button class="close-button" onclick="hidePopup(scoringPopup)">Nah</button>`;
 }
 
 
@@ -229,7 +291,26 @@ for (let i = 0; i < guessHintButtons.length; i++) {
     });
 }
 
+// Change max guesses label when slider is moved
+maxGuessesSlider.addEventListener("input", function() {
+    maxGuessesLabel.textContent = maxGuessesSlider.value;
+});
+
+// Get settings (called on newRound())
+function getSettings() {
+    if (document.getElementById("hints-off").checked) {
+        hintLevel = 0;
+    } else if (document.getElementById("hints-simple").checked) {
+        hintLevel = 1;
+    } else if (document.getElementById("hints-detailed").checked) {
+        hintLevel = 2;
+    }
+    maxGuesses = parseInt(maxGuessesSlider.value);
+    maxGuessesLabel.textContent = maxGuessesSlider.value;
+}
+
 // Called on page load
 addEventListener("load", function() {
+    getSettings();
     newRound();
 });

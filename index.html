@@ -113,9 +113,26 @@
     
     <div id="info-popup" class="popup">
         <p>Try and add red, green, and blue together to get the target colour. Note that this is additive (if you put them all at maximum you get white) rather than subtractive - think of it like shining three overlapping coloured lights at the same spot, rather than mixing paints.</p>
+        <p> Your highest score (up to a max of 500 for a perfect match) is the one that counts.</p>
+        <p>The colours are on a scale from 0-255; this is based on the way that computers most commonly "see" colour - as a combination of red, green, and blue pixels.</p>
     </div>
    
-    <div id="settings-popup" class="popup"></div>
+    <div id="settings-popup" class="popup">
+        <h4>Hints</h4>
+        <div id="hints-box">
+            <input type="radio" id="hints-off" name="hints" value="0">
+            <label for="hints-off">Off</label><br>
+            <input type="radio" id="hints-simple" name="hints" value="1" checked>
+            <label for="hints-simple">Simple</label><br>
+            <input type="radio" id="hints-detailed" name="hints" value="2">
+            <label for="hints-detailed">Detailed</label><br><br>
+        </div>
+        <h4>Number of guesses</h4>
+        <p>(Comes into effect next game)</p>
+        <input type="range" id="max-guesses-slider" name="max-guesses-slider" min="1" max="10" value="3">
+        <label for="max-guesses-slider" id="max-guesses-label">3</label>
+        <br>
+    </div>
     
     <div id="scoring-popup" class="popup"></div>
 
