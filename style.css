@@ -137,6 +137,7 @@ input[type="range"] {
     position: fixed;
     width: auto;
     height: auto;
+    max-height: 90vh;
     border: lightslategray 1vw solid;
     border-radius: 2vw;
     background-color: white;
