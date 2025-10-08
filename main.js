@@ -109,6 +109,7 @@ function buildGuessBoxes() {
         guessHintButtons[i].addEventListener("click", function() {
             hintPopup.innerHTML = generateHint(i);
             showPopup(hintPopup);
+            setCookie("hintLevel", hintLevel.toString(), 365);
         });
     }
 }
@@ -340,10 +341,23 @@ for (let i = 0; i < guessHintButtons.length; i++) {
 // Change max guesses label when slider is moved
 maxGuessesSlider.addEventListener("input", function() {
     maxGuessesLabel.textContent = maxGuessesSlider.value;
+    setCookie("maxGuesses", maxGuessesSlider.value, 365);
 });
 
 // Get settings (called on newRound())
 function getSettings() {
+    // Firstly, check cookies to see if settings have been saved
+    let savedHintLevel = getCookie("hintLevel");
+    let savedMaxGuesses = getCookie("maxGuesses");
+    if (savedHintLevel != "") {
+        hintLevel = parseInt(savedHintLevel);
+        document.getElementById(["hints-off","hints-simple","hints-detailed"][hintLevel]).checked = true;
+    }
+    if (savedMaxGuesses != "") {
+        maxGuesses = parseInt(savedMaxGuesses);
+        maxGuessesSlider.value = maxGuesses;
+        maxGuessesLabel.textContent = maxGuesses;
+    }
     if (document.getElementById("hints-off").checked) {
         hintLevel = 0;
     } else if (document.getElementById("hints-simple").checked) {
@@ -353,6 +367,35 @@ function getSettings() {
     }
     maxGuesses = parseInt(maxGuessesSlider.value);
     maxGuessesLabel.textContent = maxGuessesSlider.value;
+}
+
+// Cookie logic
+function setCookie(cname, cvalue, exdays=365) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  let expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+// Use cookie to see if user has played before
+if (getCookie("playedBefore") != "yes") {
+    showPopup(infoPopup);
+    setCookie("playedBefore", "yes", 365);
 }
 
 // Called on page load
