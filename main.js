@@ -292,6 +292,16 @@ function setScoringText() {
     <button class="close-button" onclick="hidePopup(scoringPopup)">Nah</button>`;
 }
 
+// Share functionality (writes to clipboard)
+function shareScore() {
+    const shareText = `I scored ${Math.max(0,(maxScore-265))}/500 points on Colour Call! Can you beat my score? 🎨🖌️\n\nPlay here: https://RhysFenwick.github.io/PaintMix/`;
+
+    navigator.clipboard.writeText(shareText).then(function() {
+        alert("Score copied!");
+    }, function(err) {
+        alert("Whoops, something went wrong.");
+    });
+}
 
 // Event listeners
 
@@ -397,6 +407,43 @@ if (getCookie("playedBefore") != "yes") {
     showPopup(infoPopup);
     setCookie("playedBefore", "yes", 365);
 }
+
+// Use cookies to update streak
+function updateStreak() {
+  const today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+  const cookie = getCookie("gameStreak");
+
+  let streakData = { lastPlayed: today, streakCount: 1 };
+
+  if (cookie) {
+    try {
+      const data = JSON.parse(cookie);
+      const last = new Date(data.lastPlayed);
+      const diffDays = Math.floor((new Date(today) - last) / (1000 * 60 * 60 * 24));
+
+      if (diffDays === 0) {
+        // Already played today
+        streakData = data;
+      } else if (diffDays === 1) {
+        // Continue streak
+        streakData = { lastPlayed: today, streakCount: data.streakCount + 1 };
+      } else {
+        // Missed a day → reset
+        streakData = { lastPlayed: today, streakCount: 1 };
+      }
+    } catch {
+      // Corrupted cookie → reset
+      streakData = { lastPlayed: today, streakCount: 1 };
+    }
+  }
+
+  setCookie("gameStreak", JSON.stringify(streakData));
+  return streakData.streakCount;
+}
+
+// Check and update streak on page load
+const currentStreak = updateStreak();
+console.log(`Current streak: ${currentStreak} day(s)`);
 
 // Called on page load
 addEventListener("load", function() {
