@@ -289,12 +289,13 @@ function setScoringText() {
     The target color was ${targetColor[0]} red, ${targetColor[1]} green, and ${targetColor[2]} blue.<br><br>
     New game?<br>
     <button class="close-button" onclick="hidePopup(scoringPopup); newRound();">Yeah!</button>
-    <button class="close-button" onclick="hidePopup(scoringPopup)">Nah</button>`;
+    <button class="close-button" onclick="hidePopup(scoringPopup)">Nah</button><br>
+    <button class="close-button" onclick="shareScore()">Share score</button>`;
 }
 
 // Share functionality (writes to clipboard)
 function shareScore() {
-    const shareText = `I scored ${Math.max(0,(maxScore-265))}/500 points on Colour Call! Can you beat my score? 🎨🖌️\n\nPlay here: https://RhysFenwick.github.io/PaintMix/`;
+    const shareText = `I got ${getAccuracyPercent(maxScore)} accuracy in ${guessCount} guesses on Colour Call!🎨🖌️\n\nPlay here: https://RhysFenwick.github.io/PaintMix/`;
 
     navigator.clipboard.writeText(shareText).then(function() {
         alert("Score copied!");
