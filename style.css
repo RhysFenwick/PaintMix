@@ -78,6 +78,7 @@ input[type="range"] {
     left: 5vw;
     height: fit-content;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .guess-div {
